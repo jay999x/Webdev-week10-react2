@@ -1,44 +1,31 @@
-//import React from 'react';
-import {BrowserRouter, Routes, Route, Link, Outlet} from 'react-router-dom';
+import React from 'react'
+import {useState, useRef} from 'react'
+
+
 
 export default function App(){
 
-  return  <div>
-    <BrowserRouter>
-    <Link to= "/">Allen</Link>
-    |
-    <Link to ="/class11-programs">Class11 Programs</Link>
-    <Link to = "/class12-programs">Class12 Programs</Link>
-    <Routes>
-    <Route path = "/" element = {<Layout />} >
-      <Route path ="/class11-programs" element ={<Class11Program/>} />
-      <Route path = "/class12-programs" element ={<Class12Program/>} />
-     </Route>
-    </Routes>
-    </BrowserRouter>
-  </div>
+const [timer, setTimer] = useState(0)
+const intervalRef = useRef(null);
+
+function startTimer(){
+
+  intervalRef.current = setInterval(() => {
+    setTimer((prevTime) => prevTime + 1);
+  }, 1000);
+};
+function stopTimer(){
+
+clearInterval(intervalRef.current);
+//intervalRef.current = null;
+
+}
+  
+return <div>
+  <h1>Timer: {timer}</h1>
+  <button onClick = {startTimer}>Start</button>
+  <button onClick = {stopTimer}>Stop</button>
+</div>
 
 }
 
-function Class11Program(){
-
-  return <div>
-    This is Class 11 Program
-  </div>
-}
-
-function Class12Program(){
-
-  return <div>
-    This is Class 12 Program
-  </div>
-}
-
-function Layout(){
-  return<div>
-
-    This is the main Page
-    <Outlet />
-   
-  </div>
-}
